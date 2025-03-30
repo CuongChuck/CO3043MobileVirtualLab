@@ -6,4 +6,8 @@
     <string name="HCMUT">ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH
                          TRƯỜNG ĐẠI HỌC BÁCH KHOA</string>
     <string name="model_image">Hình thiết bị</string>
+    <string name="main_view">MÀN HÌNH CHÍNH</string>
+    <string name="backward"><![CDATA[<<]]></string>
+    <string name="info">Info</string>
+    <string name="practice">Practice</string>
 </resources>

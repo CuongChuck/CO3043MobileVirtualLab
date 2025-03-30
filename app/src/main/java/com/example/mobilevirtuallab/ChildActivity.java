@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -17,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class ChildActivity extends AppCompatActivity {
     ImageButton backbtn_view2;
     TextView findpic;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,15 @@ public class ChildActivity extends AppCompatActivity {
 
         findpic = findViewById(R.id.findpic);
         findpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toMain = new Intent(ChildActivity.this, MainViewActivity.class);
+                startActivity(toMain);
+            }
+        });
+
+        imageView = findViewById(R.id.imageView2);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toMain = new Intent(ChildActivity.this, MainViewActivity.class);

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#696969"
+    tools:context=".ScanActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_joystick"
+        android:layout_width="141dp"
+        android:layout_height="138dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="220dp"
+        android:layout_marginBottom="44dp"
+        android:background="@drawable/image_button_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/layout_slider"
+        android:layout_width="63dp"
+        android:layout_height="204dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="44dp"
+        android:background="@drawable/slide_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/radar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/radar"
+        android:foreground="?attr/selectableItemBackground"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/scanner"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/scan"
+        android:foreground="?attr/selectableItemBackground"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/location1"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="256dp"
+        android:background="@drawable/location1"
+        android:foreground="?attr/selectableItemBackground"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/location2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="176dp"
+        android:background="@drawable/location2"
+        android:foreground="?attr/selectableItemBackground"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextureView
+        android:id="@+id/textureView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,4 +5,5 @@
     <string name="childtext">This is Child Activity</string>
     <string name="HCMUT">ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH
                          TRƯỜNG ĐẠI HỌC BÁCH KHOA</string>
+    <string name="model_image">Hình thiết bị</string>
 </resources>

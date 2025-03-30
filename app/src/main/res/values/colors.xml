@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background1">#A2A2A2</color>
     <color name="clicked">#A1CAFF</color>
+    <color name="banner">#195EB6</color>
 </resources>

@@ -35,31 +35,34 @@ public class MainViewActivity extends AppCompatActivity {
     }
 
     class ModelAdapter extends RecyclerView.Adapter<ModelAdapter.ModelViewHolder> {
+        private ImageView imageView;
+        private int selectedPosition = -1;
+
+        ModelAdapter(ImageView view) {
+            this.imageView = view;
+        }
+
         class ModelViewHolder extends RecyclerView.ViewHolder {
             public LinearLayout modelView;
             public TextView textView;
-            public ImageView imageView;
-            public boolean clicked = false;
 
-            ModelViewHolder(View view, ImageView image) {
+            ModelViewHolder(View view) {
                 super(view);
-                imageView = image;
                 modelView = view.findViewById(R.id.model_view);
                 textView = view.findViewById(R.id.model_name);
 
-                imageView.setVisibility(View.INVISIBLE);
                 modelView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!clicked) {
-                            modelView.setBackgroundResource(R.drawable.mainview_button_clicked);
+                        int position = getAbsoluteAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            if (selectedPosition != -1) {
+                                notifyItemChanged(selectedPosition);
+                            }
+                            selectedPosition = position;
+                            notifyItemChanged(position);
+                            imageView.setImageResource(models.get(position).getImage());
                             imageView.setVisibility(View.VISIBLE);
-                            clicked = true;
-                        }
-                        else {
-                            modelView.setBackgroundResource(R.drawable.mainview_button);
-                            imageView.setVisibility(View.INVISIBLE);
-                            clicked = false;
                         }
                     }
                 });
@@ -79,25 +82,18 @@ public class MainViewActivity extends AppCompatActivity {
                 new Model("Bộ chuẩn độ", "", R.drawable.titration)
         );
 
-        private ImageView imageView;
-
-        ModelAdapter(ImageView view) {
-            this.imageView = view;
-        }
-
         @NonNull
         @Override
         public ModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.model_view, parent, false);
-            return new ModelViewHolder(view, imageView);
+            return new ModelViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(@NonNull ModelViewHolder holder, int position) {
             Model current = models.get(position);
             holder.textView.setText(current.getName());
-            holder.modelView.setTag(current);
-            holder.imageView.setImageResource(current.getImage());
+            holder.modelView.setBackgroundResource(position == selectedPosition ? R.drawable.mainview_button_clicked : R.drawable.mainview_button);
         }
 
         @Override

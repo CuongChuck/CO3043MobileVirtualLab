@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class ChildActivity extends AppCompatActivity {
     ImageButton backbtn_view2;
+    TextView findpic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,16 @@ public class ChildActivity extends AppCompatActivity {
                 startActivity(myintent);
             }
         });
+
+        findpic = findViewById(R.id.findpic);
+        findpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toMain = new Intent(ChildActivity.this, MainViewActivity.class);
+                startActivity(toMain);
+            }
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

@@ -17,6 +17,7 @@
         android:theme="@style/Theme.CO3043MobileVirtualLab"
         tools:targetApi="31">
         <activity
+
             android:name=".ScanActivity"
             android:exported="false" />
         <activity

@@ -13,7 +13,7 @@
         android:background="@color/clicked"
         android:textSize="20sp"
         android:padding="10dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/info" />
 
     <ImageView
@@ -21,7 +21,7 @@
         android:layout_height="300dp"
         android:scaleX="0.5"
         android:contentDescription="@string/model_image"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/model_image" />
     
     <LinearLayout
@@ -31,7 +31,7 @@
         android:gravity="center">
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:clickable="true"
@@ -45,12 +45,12 @@
                 android:layout_height="match_parent"
                 android:textSize="25sp"
                 android:layout_gravity="center"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:text="@string/info" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:clickable="true"
@@ -63,7 +63,7 @@
                 android:layout_height="match_parent"
                 android:textSize="25sp"
                 android:layout_gravity="center"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:text="@string/practice" />
         </LinearLayout>
 
@@ -74,7 +74,7 @@
         android:layout_height="50dp"
         android:scrollbars="horizontal"
         android:orientation="horizontal"
-        android:layout_marginVertical="25dp"
+        android:layout_marginVertical="15dp"
         android:id="@+id/models" />
     
     <RelativeLayout

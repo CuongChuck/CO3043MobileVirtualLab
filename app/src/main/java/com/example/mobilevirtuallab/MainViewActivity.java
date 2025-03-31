@@ -37,7 +37,7 @@ public class MainViewActivity extends AppCompatActivity {
         infoButton = findViewById(R.id.info_button);
         practice = findViewById(R.id.practice_button);
         info = findViewById(R.id.info);
-        adapter = new ModelAdapter(imageView, infoButton, practice, info);
+        adapter = new ModelAdapter(imageView, infoButton, info);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
@@ -70,19 +70,29 @@ public class MainViewActivity extends AppCompatActivity {
                 }
             }
         });
+
+        practice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectedPosition = adapter.getSelectedPosition();
+                if (selectedPosition != -1) {
+                    Intent intent = new Intent(MainViewActivity.this, ScanActivity.class);
+                    intent.putExtra("image", adapter.getModels().get(adapter.getSelectedPosition()).getImage());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     class ModelAdapter extends RecyclerView.Adapter<ModelAdapter.ModelViewHolder> {
         private ImageView imageView;
         private LinearLayout infoButton;
-        private LinearLayout practiceButton;
         private TextView info;
         private int selectedPosition = -1;
 
-        ModelAdapter(ImageView view, LinearLayout infoButton, LinearLayout practice, TextView info) {
+        ModelAdapter(ImageView view, LinearLayout infoButton, TextView info) {
             this.imageView = view;
             this.infoButton = infoButton;
-            this.practiceButton = practice;
             this.info = info;
         }
 

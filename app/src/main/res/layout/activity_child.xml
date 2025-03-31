@@ -31,7 +31,7 @@
         android:id="@+id/findpic"
         android:layout_width="256dp"
         android:layout_height="54dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="88dp"
         android:background="@drawable/filed_custom2"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
@@ -41,10 +41,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/title_view2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.911" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/findpic2"
@@ -57,49 +57,49 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/title_view2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintVertical_bias="0.403" />
 
     <ImageButton
         android:id="@+id/backbtn_view2"
-        android:layout_width="54dp"
-        android:layout_height="52dp"
+        android:layout_width="66dp"
+        android:layout_height="53dp"
         android:background="#0D47A1"
         android:contentDescription="Nhấn để quay trở lại"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
+        app:layout_constraintVertical_bias="0.994"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="255dp"
         android:layout_height="234dp"
-        app:layout_constraintBottom_toTopOf="@+id/title_view2"
+        app:layout_constraintBottom_toBottomOf="@+id/title_view2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.193"
+        app:layout_constraintVertical_bias="0.166"
         app:srcCompat="@drawable/frame_1" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="255dp"
-        android:layout_height="248dp"
+        android:layout_width="258dp"
+        android:layout_height="233dp"
         app:layout_constraintBottom_toTopOf="@+id/title_view2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.33"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.781"
         app:srcCompat="@drawable/frame_2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

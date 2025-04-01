@@ -1,5 +1,6 @@
 package com.example.mobilevirtuallab;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,10 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 public class SliderClass {
+    public static final int SLIDE_NONE = 0;
+    public static final int SLIDE_ZOOM_IN = 1;
+    public static final int SLIDE_ZOOM_OUT = 2;
+
     private int BUTTON_ALPHA = 200;
     private int LAYOUT_ALPHA = 200;
     private int OFFSET = 0;
@@ -23,33 +28,33 @@ public class SliderClass {
     private Paint paint;
     private Bitmap button;
 
-    /**
-     * Constructor
-     * @param context The context of the application
-     * @param layout The layout where the slider will be placed
-     * @param button_res_id The resource ID for the button image
-     */
+    private float prevY = 0;
+    private int slideDirection = SLIDE_NONE;
+
+    public interface OnSliderMovedListener {
+        void onSliderMoved(float position);
+    }
+
+    private OnSliderMovedListener mListener;
+
+    public void setOnSliderMovedListener(OnSliderMovedListener listener) {
+        mListener = listener;
+    }
+
     public SliderClass(Context context, ViewGroup layout, int button_res_id) {
         mContext = context;
         button = BitmapFactory.decodeResource(mContext.getResources(), button_res_id);
         button_width = button.getWidth();
         button_height = button.getHeight();
-
         draw = new DrawCanvas(mContext);
         paint = new Paint();
         mLayout = layout;
         params = mLayout.getLayoutParams();
     }
 
-    /**
-     * Process touch events and update button position
-     * @param arg1 The motion event
-     */
     public void drawSlider(MotionEvent arg1) {
         float centerX = params.width / 2;
         float y = arg1.getY();
-
-        // Clamp Y position within bounds
         if (y < OFFSET + (button_height / 2)) {
             y = OFFSET + (button_height / 2);
         } else if (y > params.height - OFFSET - (button_height / 2)) {
@@ -57,70 +62,68 @@ public class SliderClass {
         }
 
         if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
-            // Check if touch is within horizontal bounds of the slider
             if (Math.abs(arg1.getX() - centerX) <= button_width) {
                 draw.position(centerX, y);
                 draw();
                 touch_state = true;
+                prevY = y;
+                slideDirection = SLIDE_NONE;
+                reportPosition(y);
             }
         } else if (arg1.getAction() == MotionEvent.ACTION_MOVE && touch_state) {
+            if (Math.abs(y - prevY) > 5) {
+                slideDirection = (y < prevY) ? SLIDE_ZOOM_IN : SLIDE_ZOOM_OUT;
+                prevY = y;
+            }
+
             draw.position(centerX, y);
             draw();
+            reportPosition(y);
         } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
             mLayout.removeView(draw);
             touch_state = false;
+            slideDirection = SLIDE_NONE;
         }
     }
 
-    /**
-     * Set the offset from the edge of the layout
-     * @param offset The offset value
-     */
+    private void reportPosition(float y) {
+        if (mListener != null) {
+            float bottomY = params.height - OFFSET - (button_height / 2);
+            float topY = OFFSET + (button_height / 2);
+            float range = bottomY - topY;
+            float normalizedPos = 1.0f - ((y - topY) / range);
+
+            mListener.onSliderMoved(normalizedPos);
+        }
+    }
+
+    public int getSlideDirection() {
+        return slideDirection;
+    }
+
     public void setOffset(int offset) {
         OFFSET = offset;
     }
 
-    /**
-     * Set the alpha (transparency) of the button
-     * @param alpha The alpha value (0-255)
-     */
     public void setButtonAlpha(int alpha) {
         BUTTON_ALPHA = alpha;
         paint.setAlpha(alpha);
     }
 
-    /**
-     * Set the alpha (transparency) of the layout background
-     * @param alpha The alpha value (0-255)
-     */
     public void setLayoutAlpha(int alpha) {
         LAYOUT_ALPHA = alpha;
         mLayout.getBackground().setAlpha(alpha);
     }
 
-    /**
-     * Set the size of the button
-     * @param width The width of the button
-     * @param height The height of the button
-     */
     public void setButtonSize(int width, int height) {
         button = Bitmap.createScaledBitmap(button, width, height, false);
         button_width = button.getWidth();
         button_height = button.getHeight();
     }
 
-    /**
-     * Set the size of the layout
-     * @param width The width of the layout
-     * @param height The height of the layout
-     */
     public void setLayoutSize(int width, int height) {
         params.width = width;
         params.height = height;
-    }
-
-    public float getPosition() {
-        return draw.y + (button_height / 2);
     }
 
     private void draw() {

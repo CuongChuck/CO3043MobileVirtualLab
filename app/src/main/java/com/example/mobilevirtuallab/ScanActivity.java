@@ -2,15 +2,22 @@ package com.example.mobilevirtuallab;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraDevice;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.Manifest;
 import android.hardware.camera2.*;
@@ -20,23 +27,29 @@ import androidx.core.app.ActivityCompat;
 public class ScanActivity extends Activity {
     private TextureView textureView;
     private CameraDevice cameraDevice;
-    SharedPreferences sp;
+    private SharedPreferences sp;
     RelativeLayout layout_joystick;
     RelativeLayout layout_slider;
     JoyStickClass js;
-    SliderClass slider;
+    SliderClass sd;
+    private ImageView modelImageView;
+    private float initialImageSize = 200f;
+    private float minZoom = 0.5f;
+    private float maxZoom = 2.0f;
 
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-
         textureView = findViewById(R.id.textureView);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
-        } else {
-            openCamera();
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("image")) {
+            int imageResourceId = intent.getIntExtra("image", 0);
+            modelImageView = findViewById(R.id.model_image_view);
+            if (modelImageView != null && imageResourceId != 0) {
+                modelImageView.setImageResource(imageResourceId);
+            }
         }
 
         sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
@@ -59,27 +72,47 @@ public class ScanActivity extends Activity {
                 return true;
             }
         });
-        layout_slider = (RelativeLayout)findViewById(R.id.layout_slider);
 
-        slider = new SliderClass(getApplicationContext(), layout_slider, R.drawable.image_button);
-        slider.setButtonSize(150, 150);
-        slider.setLayoutSize(150, 500);
-        slider.setLayoutAlpha(150);
-        slider.setButtonAlpha(100);
-        slider.setOffset(0);
+        layout_slider = (RelativeLayout)findViewById(R.id.layout_slider);
+        sd = new SliderClass(getApplicationContext(), layout_slider, R.drawable.image_button);
+        sd.setButtonSize(150, 150);
+        sd.setLayoutSize(150, 500);
+        sd.setLayoutAlpha(150);
+        sd.setButtonAlpha(100);
+        sd.setOffset(0);
+
+        sd.setOnSliderMovedListener(new SliderClass.OnSliderMovedListener() {
+            @Override
+            public void onSliderMoved(float position) {
+                if (modelImageView != null) {
+                    float minScale = 0.5f;
+                    float maxScale = 3.0f;
+                    float scale = minScale + position * (maxScale - minScale);
+                    modelImageView.setScaleX(scale);
+                    modelImageView.setScaleY(scale);
+                }
+            }
+        });
+
         layout_slider.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
-                slider.drawSlider(arg1);
+                sd.drawSlider(arg1);
                 return true;
             }
         });
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+        } else {
+            openCamera();
+        }
     }
+
     private void openCamera() {
         CameraManager cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
         try {
-            String cameraId = cameraManager.getCameraIdList()[0]; // 0 for back camera
+            String cameraId = cameraManager.getCameraIdList()[0];
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
